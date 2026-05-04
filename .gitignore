@@ -1,0 +1,31 @@
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+xcshareddata/
+*.xcworkspace
+*.xcuserstate
+*.xcarchive
+
+# App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# SwiftPM
+.swiftpm/
+.build/
+
+# Temporary files
+*.swp
+*.lock
+*.tmp
+
+# Simulator Device Support
+*.moved-aside
+
+# project security
+*.mobileprovision
+*.xcconfig
