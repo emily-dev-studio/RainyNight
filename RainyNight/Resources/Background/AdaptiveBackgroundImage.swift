@@ -9,39 +9,23 @@ import SwiftUI
 
 struct AdaptiveBackgroundImage: View {
     
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @Environment(\.verticalSizeClass) var verticalSizeClass
-    
     #if os(iOS)
-    @State private var orientation = UIDevice.current.orientation
+    let orientation: UIDeviceOrientation  // ✅ State 대신 let
     #endif
     
     var body: some View {
-        Group {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .ignoresSafeArea()
-        }
-        #if os(iOS)
-        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-            let newOrientation = UIDevice.current.orientation
-            if newOrientation.isValidInterfaceOrientation {
-                orientation = newOrientation
-            }
-        }
-        #endif
+        Image(imageName)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .ignoresSafeArea()
     }
     
     var imageName: String {
-        // mac
         #if os(macOS)
         return "background-macos"
-        
         #else
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-            // iPad
             switch orientation {
             case .portrait, .portraitUpsideDown:
                 return "background-portrait"
@@ -51,7 +35,6 @@ struct AdaptiveBackgroundImage: View {
                 return "background-portrait"
             }
         default:
-            // iPhone
             switch orientation {
             case .portrait, .portraitUpsideDown:
                 return "background-portrait"
@@ -66,5 +49,5 @@ struct AdaptiveBackgroundImage: View {
 }
 
 #Preview {
-    AdaptiveBackgroundImage()
+    AdaptiveBackgroundImage(orientation: .portrait)
 }
